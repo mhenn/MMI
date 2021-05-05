@@ -10,6 +10,7 @@
 #include "../Algorithms/TSP.h"
 #include <filesystem>
 
+
 void ExecP1(){
    
    Reader r = Reader();
@@ -43,24 +44,46 @@ void ExecP2(){
    }
 }
 
-void ExecP3(){
+void ExecP3(int bound, int alg){
    
    Reader r = Reader();
    TSP t = TSP();
-   int bound = 6;
+   Graph * tsp;
+   //Graph*
    using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
    for (const auto& dirEntry : recursive_directory_iterator("../graphs/p3/")) {
       bound--;
       if(bound == 0)
          return;
       std::filesystem::path file = dirEntry.path();
+      
+      
       std::string f = file.generic_string();
       std::cout << f << std::endl;
       Graph* g = r.ReadFile(f, weighted);
-      //Graph* tsp = t.NearestNeighbour(g);
-      //Graph* tsp = t.DoubleTree(g);
-      Graph* tsp = t.BranchNBound(g);
-      //std::cout << tsp->weight_sum_ << std::endl;
+      auto start = std::chrono::system_clock::now();
+      switch(alg){
+         case 1:
+            tsp = TSP::NearestNeighbour(g,true);
+            break;
+         case 2:
+            tsp = TSP::DoubleTree(g, true);
+            break;
+         case 3:
+            tsp = TSP::BranchNBound(g,false);
+            break;
+         case 4:
+            tsp = TSP::BranchNBound(g,true);
+            break;
+         default:
+            break;
+      }
+      auto end = std::chrono::system_clock::now();
+      auto elapsed =end - start;
+      auto f_secs = std::chrono::duration_cast<std::chrono::duration<float>>(elapsed);
+      std::cout <<  "time:" << f_secs << '\n';
+      std::cout <<  "weight:" << tsp->weight_sum_ << std::endl;
+      std::cout << std::endl;
    }
 }
 

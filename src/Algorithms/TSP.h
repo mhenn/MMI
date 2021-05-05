@@ -13,29 +13,20 @@
 
 class TSP {
    public:
-//      struct leveled_node{
-//         Node* node_;
-//         int level_;
-//         double weight_;
-//         leveled_node(Node* node, int level, double weight){
-//            node_ = node;
-//            level_ = level;
-//            weight_ = weight;
-//         }
-//         leveled_node(){
-//            node_ = nullptr;
-//            level_ = 0;
-//            weight_ = 0;
-//         }
-//      };
-      void BruteForceRecursion(int* start_id, Node* curr, double sum, double* l_bound, std::vector<Node*>* tour, std::vector<Node*>* best_tour,  Graph* g);
       
-      Graph *NearestNeighbour(Graph *g);
+      static Graph *NearestNeighbour(Graph *g, bool print);
       
-      Graph *BranchNBound(Graph *g);
+      static Graph *DoubleTree(Graph *g, bool print);
       
-      Graph *DoubleTree(Graph *g);
+      //std::vector<Node*> BranchNBound(Graph *g, bool test_all);
+      static Graph* BranchNBound(Graph *g, bool test_all);
       
+      
+      //void BruteForceRecursion(int *start_id, Node *curr, double sum, double *l_bound, std::vector<Node *> *tour,
+      //                         std::vector<Node *> *best_tour, Graph *g, bool *test_all);
+      
+      static void BruteForceRecursion(int *start_id, Node *curr, double sum, double *l_bound, std::vector<Edge *> *tour,
+                               std::vector<Edge *> *best_tour, Graph *g, bool *test_all);
 };
 
 
