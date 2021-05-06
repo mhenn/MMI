@@ -17,7 +17,9 @@ Graph::Graph(int size){
       nodes_.push_back(new Node(i));
    edges_ = std::vector<Edge*>();
    adjacency_ = std::map<int, std::vector<Node*>>();
-   adjacency_matrix_.resize(size, std::vector<Edge*>(size,nullptr));
+   std::vector<std::vector<Edge*>> tmp(size, std::vector<Edge*>(size, nullptr));
+//   adjacency_matrix_.resize(size, std::vector<Edge*>(size,nullptr));
+   adjacency_matrix_ = tmp;
 }
 
 void Graph::AddEdge(int from, int to) {
@@ -53,7 +55,7 @@ void Graph::AddAdjacency(Edge* edge){
 }
 void Graph::AddAdjacencyMatrix(Edge* edge){
    adjacency_matrix_[edge->from_->id_][edge->to_->id_] = edge;
-   adjacency_matrix_[edge->to_->id_][edge->from_->id_] = edge;
+  // adjacency_matrix_[edge->to_->id_][edge->from_->id_] = edge;
 }
 
 void Graph::ClearMarkings(){

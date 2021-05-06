@@ -28,7 +28,7 @@ Graph* MST::Kruskal(Graph* g) {
       Edge *e = pq.top();
       pq.pop();
       if (Find(e->from_) != Find(e->to_)) {
-         mst->AddEdge(e);
+         mst->AddEdge(new Edge(mst->nodes_[e->from_->id_], mst->nodes_[e->to_->id_],e->weight_));
          Union(e->from_, e->to_);
       }
       if (mst->nodes_ == g->nodes_)

@@ -25,7 +25,7 @@ class TSP {
       //void BruteForceRecursion(int *start_id, Node *curr, double sum, double *l_bound, std::vector<Node *> *tour,
       //                         std::vector<Node *> *best_tour, Graph *g, bool *test_all);
       
-      static void BruteForceRecursion(int *start_id, Node *curr, double sum, double *l_bound, std::vector<Edge *> *tour,
+      static void BruteForceRecursion(int* lvl, int *start_id, Node *curr, double sum, double *l_bound, std::vector<Edge *> *tour,
                                std::vector<Edge *> *best_tour, Graph *g, bool *test_all);
 };
 
