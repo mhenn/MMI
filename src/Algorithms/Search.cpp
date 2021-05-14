@@ -30,16 +30,16 @@ std::vector<Node *> Search::Dfs(Graph* g, Node* start){
    std::stack<Node*> stack = std::stack<Node*>();
    stack.push(start);
    std::vector<Node*> visited = std::vector<Node*>();
-   visited.push_back(start);
    
    while(!stack.empty()){
       Node* node = stack.top();
+      visited.push_back(node);
       stack.pop();
-      for(Node* d : g->adjacency_[node->id_]){
+      for(auto e : node->edges_){
+         Node* d = e->to_;
          if(!d->marked_){
             d->marked_ = true;
             stack.push(d);
-            visited.push_back(d);
          }
       }
    }

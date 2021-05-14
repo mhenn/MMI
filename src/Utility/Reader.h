@@ -10,12 +10,12 @@
 #include <string>
 #include "../Structures/Graph.h"
 
-enum Graph_type { simple, weighted};
+enum Graph_type { simple, weighted, weighted_directed};
 
 class Reader {
    public:
       
-      Graph *ReadFile(std::string file_name, Graph_type type);
+      static Graph *ReadFile(std::string file_name, Graph_type type);
       
 };
 

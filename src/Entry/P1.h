@@ -8,6 +8,7 @@
 #include "../Algorithms/Search.h"
 #include "../Algorithms/MST.h"
 #include "../Algorithms/TSP.h"
+#include "../Algorithms/SP.h"
 #include <filesystem>
 
 
@@ -84,6 +85,22 @@ void ExecP3(int bound, int alg){
       std::cout <<  "time:" << f_secs << '\n';
       std::cout <<  "weight:" << tsp->weight_sum_ << std::endl;
       std::cout << std::endl;
+   }
+}
+
+void ExecP4(int alg){
+   
+   using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
+   for (const auto& dirEntry : recursive_directory_iterator("../graphs/p4/")) {
+      std::filesystem::path file = dirEntry.path();
+      std::string f = file.generic_string();
+      std::cout << f << std::endl;
+      Graph* g = Reader::ReadFile(f, weighted_directed);
+   
+      if (alg == 1)
+         g = SP::Dijkstra(g, g->nodes_[2]);
+      else
+         g = SP::BellmanFord(g, g->nodes_[2]);
    }
 }
 

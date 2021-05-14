@@ -12,32 +12,39 @@
 #include <iterator>
 #include <map>
 
+enum DIR {
+   DIRECTED, UNDIRECTED
+};
+
 class Graph {
    public:
-      std::vector<Node*> nodes_;
-      std::vector<Edge*> edges_;
-      std::map<int, std::vector<Node*>> adjacency_;
-      std::vector<std::vector<Edge*>> adjacency_matrix_;
+      std::vector<Node *> nodes_;
+      std::vector<Edge *> edges_;
+      std::map<int, std::vector<Node *>> adjacency_;
+      
       double weight_sum_ = 0;
    public:
       Graph();
-      Graph(int size);
       
-      void AddEdge(Edge* edge);
+      explicit Graph(int size);
       
-      void AddNode(Node* node);
+      int Size(){return nodes_.size();}
+      
+      void AddEdge(Edge *edge, bool add_weight = true);
       
       void AddAdjacency(Edge *edge);
       
-      void AddEdge(int from, int to);
+      void AddEdge(int from, int to, DIR type);
       
-      void AddEdge(int from, int to, double weight);
-
+      void AddEdge(int from, int to, double weight, DIR type);
+      
       void ClearMarkings();
       
-      void RemoveEdge(Edge *edge);
+      Edge *GetEdge(Node *from, Node *to);
       
-      void AddAdjacencyMatrix(Edge *edge);
+      Edge *GetEdge(int from, int to);
+      
+      void Clear();
 };
 
 #endif //MMI_GRAPH_H

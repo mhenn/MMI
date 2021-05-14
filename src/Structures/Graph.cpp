@@ -8,7 +8,6 @@ Graph::Graph(){
    nodes_ =  std::vector<Node*>();
    edges_ =  std::vector<Edge*>();
    adjacency_ = std::map<int, std::vector<Node*>>();
-   adjacency_matrix_ = std::vector<std::vector<Edge*>>();
 }
 
 Graph::Graph(int size){
@@ -18,44 +17,30 @@ Graph::Graph(int size){
    edges_ = std::vector<Edge*>();
    adjacency_ = std::map<int, std::vector<Node*>>();
    std::vector<std::vector<Edge*>> tmp(size, std::vector<Edge*>(size, nullptr));
-//   adjacency_matrix_.resize(size, std::vector<Edge*>(size,nullptr));
-   adjacency_matrix_ = tmp;
 }
 
-void Graph::AddEdge(int from, int to) {
-   AddEdge(new Edge(nodes_.at(from), nodes_.at(to)));
-   AddEdge(new Edge(nodes_.at(to), nodes_.at(from)));
+void Graph::AddEdge(int from, int to, DIR type) {
+   AddEdge(new Edge(nodes_.at(from), nodes_.at(to)), false);
+   if(type == UNDIRECTED)
+      AddEdge(new Edge(nodes_.at(to), nodes_.at(from)), true);
 }
 
-void Graph::AddEdge(int from, int to, double weight) {
-   AddEdge(new Edge(nodes_.at(from), nodes_.at(to), weight));
-   AddEdge(new Edge(nodes_.at(to), nodes_.at(from), weight));
+void Graph::AddEdge(int from, int to, double weight, DIR type) {
+   AddEdge(new Edge(nodes_.at(from), nodes_.at(to), weight), true);
+   if(type == UNDIRECTED)
+      AddEdge(new Edge(nodes_.at(to), nodes_.at(from), weight), false);
 }
 
-//TODO splitt into AddWeightedEdge
-void Graph::AddEdge(Edge* edge){
+void Graph::AddEdge(Edge* edge, bool add_weight){
    edges_.push_back(edge);
    nodes_.at(edge->from_->id_)->AddEdge(edge);
-   weight_sum_ += edge->weight_;
+   if(add_weight)
+      weight_sum_ += edge->weight_;
    AddAdjacency(edge);
-   AddAdjacencyMatrix(edge);
 }
 
-void Graph::RemoveEdge(Edge *edge){
-   edges_.erase(std::remove(edges_.begin(), edges_.end(),edge),edges_.end());
-}
-
-void Graph::AddNode(Node* node){
-   nodes_.push_back(node);
-}
-//TODO both shouldnt add both directions, make it AddEdge dependant
 void Graph::AddAdjacency(Edge* edge){
    adjacency_[edge->from_->id_].push_back(edge->to_);
-   adjacency_[edge->to_->id_].push_back(edge->from_);
-}
-void Graph::AddAdjacencyMatrix(Edge* edge){
-   adjacency_matrix_[edge->from_->id_][edge->to_->id_] = edge;
-  // adjacency_matrix_[edge->to_->id_][edge->from_->id_] = edge;
 }
 
 void Graph::ClearMarkings(){
@@ -63,3 +48,21 @@ void Graph::ClearMarkings(){
       n->marked_ = false;
 }
 
+void Graph::Clear(){
+   for(auto n: nodes_){
+      n->marked_ = false;
+      n->parent_ = n;
+      n->rank_ = 0;
+      n->dist_ = INFINITY;
+   }
+   
+}
+
+Edge* Graph::GetEdge(Node* from, Node* to){
+   auto it = std::find_if(from->edges_.begin(), from->edges_.end(), [&](Edge* e){return e->to_->id_ == to->id_;});
+   return *it;
+}
+
+Edge* Graph::GetEdge(int from, int to) {
+   return GetEdge(nodes_[from], nodes_[to]);
+}

@@ -26,11 +26,15 @@ Graph* Reader::ReadFile(std::string file_name, Graph_type type) {
       
       if(type == simple){
          sline >> from_id >> to_id;
-         g->AddEdge(from_id, to_id);
+         g->AddEdge(from_id, to_id, UNDIRECTED);
       } else if(type == weighted){
          sline >> from_id >> to_id >> weight;
-         g->AddEdge(from_id, to_id, weight);
+         g->AddEdge(from_id, to_id, weight, UNDIRECTED);
+      } else if(type == weighted_directed){
+         sline >> from_id >> to_id >> weight;
+         g->AddEdge(from_id, to_id, weight, DIRECTED);
       }
+      
    }
    return g;
 }

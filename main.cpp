@@ -10,5 +10,7 @@ int main(int argc, char *argv[]) {
       ExecP2();
    else if(t == "3")
       ExecP3(atoi(argv[2]), atoi(argv[3]));
+   else if(t == "4")
+      ExecP4(atoi(argv[2]));
    return 0;
 }
