@@ -9,6 +9,7 @@
 #include "../Structures/Graph.h"
 #include <functional>
 #include <queue>
+#include <iostream>
 
 typedef std::pair<double, Node*> valued_node;
 
@@ -16,9 +17,9 @@ typedef std::pair<double, Node*> valued_node;
 class SP {
       
       
-      static void OutputShortestPath(Graph *g, Node *dst);
    
    public:
+      static void OutputShortestPath(Graph *g, Node *dst);
       static Graph *Dijkstra(Graph *g, Node *start);
       static Graph *BellmanFord(Graph *g, Node *start);
 };
