@@ -2,6 +2,7 @@
 // Created by mhenn on 5/14/2021.
 //
 
+#include <stack>
 #include "SP.h"
 
 bool CompareNodesByDist(Node *e, Node *b) {
@@ -16,14 +17,16 @@ Graph *SP::Dijkstra(Graph *g, Node *start) {
    start->dist_ = 0;
    double curr_val;
    Node *curr, *dst;
+   int vertice_count = 0;
    
-   for (int i = 0; i <= g->Size(); i++) {
+   while(vertice_count != g->Size()){
       curr = pq.top();
       pq.pop();
       
       if (curr->marked_)
          continue;
       
+      vertice_count++;
       curr->marked_ = true;
       for (auto e : curr->edges_) {
          curr_val = e->weight_ + curr->dist_;
@@ -75,17 +78,18 @@ Graph *SP::BellmanFord(Graph *g, Node *start) {
 
 void SP::OutputShortestPath(Graph *g, Node *dst) {
    
-   std::queue<Node *> q;
+   std::stack<Node *> q;
    Node *curr = dst;
    std::string ap = " -> ";
    while (curr != curr->parent_) {
       q.push(curr);
       curr = curr->parent_;
    }
+   q.push(curr);
    while (!q.empty()) {
       if (q.size() == 1)
          ap = " ";
-      std::cout << q.front()->id_ << ap;
+      std::cout << q.top()->id_ << ap;
       q.pop();
    }
    
