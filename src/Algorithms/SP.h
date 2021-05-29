@@ -15,8 +15,6 @@ typedef std::pair<double, Node*> valued_node;
 
 
 class SP {
-      
-      
    
    public:
       static void OutputShortestPath(Graph *g, Node *dst);

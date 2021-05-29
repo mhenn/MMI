@@ -13,6 +13,7 @@ Graph* Reader::ReadFile(std::string file_name, Graph_type type) {
    int from_id ,to_id;
    double weight;
    bool init = true;
+   Edge* e = nullptr;
    while(std::getline(file,line )){
       std::stringstream sline(line);
       std::string token;
@@ -33,6 +34,11 @@ Graph* Reader::ReadFile(std::string file_name, Graph_type type) {
       } else if(type == weighted_directed){
          sline >> from_id >> to_id >> weight;
          g->AddEdge(from_id, to_id, weight, DIRECTED);
+      } else if(type == capacity){
+         sline >> from_id >> to_id >> weight;
+          e = new Edge(g->nodes_.at(from_id), g->nodes_.at(to_id));
+          e->capacity_ = weight;
+          g->AddEdge(e,false);
       }
       
    }

@@ -11,7 +11,7 @@
 #include "../Algorithms/TSP.h"
 #include "../Algorithms/SP.h"
 #include <filesystem>
-
+#include "../Algorithms/Flow.h"
 
 std::vector<std::pair<std::string, Graph *>> GetGraph(std::string path, Graph_type type) {
    std::vector<std::pair<std::string, Graph *>> graphs;
@@ -135,6 +135,31 @@ void ExecP4(int alg) {
       std::string path =  "../graphs/p2/G1_1_2.txt";
       g_list.emplace_back(path,Reader::ReadFile(path, weighted_directed));
       g_list.emplace_back(path, Reader::ReadFile(path, weighted));
+   }
+   
+}
+
+void ExecP5() {
+   Node *start, *goal;
+   Graph *g;
+   std::string file_name;
+   std::vector<std::pair<std::string,Graph*>> g_list = GetGraph("../graphs/p5", capacity);
+   
+   for(int i = 0; i < 2; i++) {
+      
+      for (auto p : g_list) {
+         g = p.second;
+         start = g->nodes_[0];
+         goal = g->nodes_[7];
+         std::cout << file_name << std::endl;
+         g = Flow::EdmondsKarp(g, start, goal);
+         
+         Flow::PrintMaxFlow(g, goal);
+         
+      }
+      g_list.clear();
+      std::string path =  "../graphs/p2/G1_1_2.txt";
+      g_list.emplace_back(path,Reader::ReadFile(path, capacity));
    }
    
 }

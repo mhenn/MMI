@@ -45,6 +45,12 @@ class Graph {
       Edge *GetEdge(int from, int to);
       
       void Clear();
+      
+      void ClearEdges();
+      
+      std::vector<Edge*>* GetAllEdgesTo(Node* rome);
+      
+      void BuildResidual();
 };
 
 #endif //MMI_GRAPH_H
