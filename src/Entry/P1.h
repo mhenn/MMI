@@ -144,7 +144,7 @@ void ExecP5() {
    Graph *g;
    std::string file_name;
    std::vector<std::pair<std::string,Graph*>> g_list = GetGraph("../graphs/p5", capacity);
-   
+   double flow = 0.0;
    for(int i = 0; i < 2; i++) {
       
       for (auto p : g_list) {
@@ -152,9 +152,9 @@ void ExecP5() {
          start = g->nodes_[0];
          goal = g->nodes_[7];
          std::cout << file_name << std::endl;
-         g = Flow::EdmondsKarp(g, start, goal);
+         flow = Flow::EdmondsKarp(g, start, goal);
          
-         Flow::PrintMaxFlow(g, goal);
+         std::cout << "Max Fluss: " << flow << std::endl;
          
       }
       g_list.clear();

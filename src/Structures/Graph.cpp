@@ -64,14 +64,26 @@ void Graph::ClearEdges(){
    }
 }
 
+std::vector< std::vector< double>>  Graph::GetWeightMatrix(){
+   
+   unsigned int size = nodes_.size();
+   std::vector<std::vector<double>> adj_matrix(size, std::vector<double>(size, 0));
+   for(auto e : edges_)
+      adj_matrix[e->from_->id_][e->to_->id_] = e->weight_;
+   
+   return adj_matrix;
+}
+
+/*
 void Graph::BuildResidual(){
    std::vector<Edge*> new_res = std::vector<Edge*>();
-   std::vector<int> removals = std::vector<int>();
+   std::vector<Edge*> removals = std::vector<Edge*>();
    Edge* e;
-   for(int i =0; i < edges_.size(); i++){
-      e = edges_.at(i);
-      if(e->CapacityRemainder() == 0)
-         removals.emplace_back(i);
+   for(auto e : edges_){
+      if(e->CapacityRemainder() == 0) {
+         removals.emplace_back(e);
+         continue;
+      }
       if (e->weight_ != 0 && !e->is_residual_){
          auto existing_res_edge = GetEdge(e->to_,e->from_);
          if (existing_res_edge ){
@@ -85,11 +97,11 @@ void Graph::BuildResidual(){
       }
    }
    for (auto i : removals)
-      edges_.erase(edges_.begin() + i);
+      edges_.erase(std::remove(edges_.begin(), edges_.end(), i), edges_.end());
    for(auto e : new_res)
       AddEdge(e,false);
 }
-
+*/
 
 Edge* Graph::GetEdge(Node* from, Node* to){
    auto it = std::find_if(from->edges_.begin(), from->edges_.end(), [&](Edge* e){return e->to_->id_ == to->id_;});

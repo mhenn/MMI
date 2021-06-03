@@ -13,9 +13,7 @@ class Edge {
       Node *from_;
       Node *to_;
       double weight_ = 0;
-      double capacity_ = 0;
       //double flow_ = 0;
-      bool is_residual_ = false;
       
       Edge(){}
       ~Edge(){}
@@ -26,10 +24,6 @@ class Edge {
       Edge(int from, int to);
       
       Edge(int from, int to, double weight);
-
-      double CapacityRemainder(){
-         return capacity_ - weight_;
-      }
       
       bool operator <(const Edge* e)const {
          return weight_ < e->weight_;

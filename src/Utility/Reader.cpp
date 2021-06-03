@@ -31,16 +31,10 @@ Graph* Reader::ReadFile(std::string file_name, Graph_type type) {
       } else if(type == weighted){
          sline >> from_id >> to_id >> weight;
          g->AddEdge(from_id, to_id, weight, UNDIRECTED);
-      } else if(type == weighted_directed){
+      } else if(type == weighted_directed || type == capacity){
          sline >> from_id >> to_id >> weight;
          g->AddEdge(from_id, to_id, weight, DIRECTED);
-      } else if(type == capacity){
-         sline >> from_id >> to_id >> weight;
-          e = new Edge(g->nodes_.at(from_id), g->nodes_.at(to_id));
-          e->capacity_ = weight;
-          g->AddEdge(e,false);
       }
-      
    }
    return g;
 }

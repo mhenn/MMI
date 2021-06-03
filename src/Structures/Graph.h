@@ -51,6 +51,9 @@ class Graph {
       std::vector<Edge*>* GetAllEdgesTo(Node* rome);
       
       void BuildResidual();
+      
+      std::vector<std::vector<double>> GetWeightMatrix();
+      
 };
 
 #endif //MMI_GRAPH_H
