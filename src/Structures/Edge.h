@@ -13,7 +13,7 @@ class Edge {
       Node *from_;
       Node *to_;
       double weight_ = 0;
-      //double flow_ = 0;
+      double capacity_ = 0;
       
       Edge(){}
       ~Edge(){}

@@ -13,7 +13,7 @@
 #include <map>
 
 enum DIR {
-   DIRECTED, UNDIRECTED
+   DIRECTED, UNDIRECTED, DIRECTED_CAPACITY
 };
 
 class Graph {
@@ -48,12 +48,11 @@ class Graph {
       
       void ClearEdges();
       
-      std::vector<Edge*>* GetAllEdgesTo(Node* rome);
+      std::vector<std::vector<double>> GetCapacityMatrix();
       
-      void BuildResidual();
+      void AddEdge(int from, int to, double weight, double capacity);
       
-      std::vector<std::vector<double>> GetWeightMatrix();
-      
+      int AddNode(double balance);
 };
 
 #endif //MMI_GRAPH_H

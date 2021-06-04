@@ -14,5 +14,7 @@ int main(int argc, char *argv[]) {
       ExecP4(atoi(argv[2]));
    else if(t == "5")
       ExecP5();
+   else if(t == "6")
+      ExecP6(atoi(argv[2]));
    return 0;
 }

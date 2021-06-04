@@ -12,6 +12,7 @@
 #include "../Algorithms/SP.h"
 #include <filesystem>
 #include "../Algorithms/Flow.h"
+#include "../Algorithms/CostFlow.h"
 
 std::vector<std::pair<std::string, Graph *>> GetGraph(std::string path, Graph_type type) {
    std::vector<std::pair<std::string, Graph *>> graphs;
@@ -148,6 +149,7 @@ void ExecP5() {
    for(int i = 0; i < 2; i++) {
       
       for (auto p : g_list) {
+         file_name = p.first;
          g = p.second;
          start = g->nodes_[0];
          goal = g->nodes_[7];
@@ -161,7 +163,22 @@ void ExecP5() {
       std::string path =  "../graphs/p2/G1_1_2.txt";
       g_list.emplace_back(path,Reader::ReadFile(path, capacity));
    }
+}
+
+void ExecP6(int alg) {
+   Node *start, *goal;
+   Graph *g;
+   std::string file_name;
+   std::vector<std::pair<std::string,Graph*>> g_list = GetGraph("../graphs/p6", balance);
+   double flow = 0.0;
    
+   for (auto p : g_list) {
+      file_name = p.first;
+      g = p.second;
+      std::cout << file_name << std::endl;
+      CostFlow::cycle_canceling(g);
+   }
+
 }
 
 #endif //MMI_P1_H

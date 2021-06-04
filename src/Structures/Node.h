@@ -14,6 +14,7 @@ class Node {
         Node* parent_ = this;
         int rank_ = 0;
         int id_ = 0;
+        double _balance = 0;
         double dist_ = INFINITY;
         bool marked_ = false;
         std::vector<Edge*> edges_;

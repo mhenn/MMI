@@ -12,9 +12,7 @@ class Flow {
    public:
       static double EdmondsKarp(Graph* g, Node* s, Node* t);
       
-      static void PrintMaxFlow(Graph *pGraph, Node *pNode);
       static std::vector<int> FlowBSF(Graph*g,std::vector<std::vector<int>> flow, Node* s, Node* t);
-      static bool PathExists(Node *start, Node *goal);
       
       static bool
       FlowBSF(Graph *g, std::vector<std::vector<double>> capacity, std::vector<std::vector<double>> flow, Node *start,

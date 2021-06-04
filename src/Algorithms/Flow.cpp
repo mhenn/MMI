@@ -53,7 +53,7 @@ double Flow::EdmondsKarp(Graph *g, Node *s, Node *t) {
    double max_flow = 0.0;
    int size = g->nodes_.size();
    std::vector<std::vector<double>> flow(size, std::vector<double>(size, 0));
-   std::vector<std::vector<double>> capacity = g->GetWeightMatrix();
+   std::vector<std::vector<double>> capacity = g->GetCapacityMatrix();
    Node* tmp = t;
    double  min = INFINITY;
    double remainder = 0.0;
@@ -85,13 +85,11 @@ double Flow::EdmondsKarp(Graph *g, Node *s, Node *t) {
    
    for(int i =0; i < size; i++)
       max_flow += flow[i][t->id_];
-   
    return max_flow;
 }
 
 
 bool Flow::FlowBSF(Graph*g,std::vector<std::vector<double>> capacity, std::vector<std::vector<double>> flow, Node* start, Node* dst){
-   
    
       start->marked_ = true;
       std::queue<Node*> queue = std::queue<Node*>();
@@ -103,7 +101,6 @@ bool Flow::FlowBSF(Graph*g,std::vector<std::vector<double>> capacity, std::vecto
          queue.pop();
          for(int i = 0; i < g->nodes_.size(); i++){
             v = g->nodes_.at(i);
-            double t = capacity[u_id][i] - flow[u_id][i];
             if(capacity[u_id][i] - flow[u_id][i] > 0 and !v->marked_) {
                v->marked_ = true;
                queue.push(v);
@@ -116,20 +113,3 @@ bool Flow::FlowBSF(Graph*g,std::vector<std::vector<double>> capacity, std::vecto
       return false;
 }
 
-bool Flow::PathExists(Node* start, Node* goal){
-   Node* tmp = start;
-   
-   while (tmp->parent_ != tmp)
-      tmp = tmp->parent_;
-   return tmp == goal;
-}
-
-void Flow::PrintMaxFlow(Graph *g, Node *node) {
-   double max_flow = 0.0;
-   std::vector<Edge*>* edges = g->GetAllEdgesTo(node);
-   for (auto e: *edges)
-      max_flow += e->weight_;
-   
-   std::cout << max_flow << std::endl;
-
-}

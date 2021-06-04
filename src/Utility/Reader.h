@@ -10,7 +10,7 @@
 #include <string>
 #include "../Structures/Graph.h"
 
-enum Graph_type { simple, weighted, weighted_directed, capacity};
+enum Graph_type { simple, weighted, weighted_directed, capacity, balance};
 
 class Reader {
    public:

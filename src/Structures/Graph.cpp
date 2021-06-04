@@ -16,13 +16,19 @@ Graph::Graph(int size){
       nodes_.push_back(new Node(i));
    edges_ = std::vector<Edge*>();
    adjacency_ = std::map<int, std::vector<Node*>>();
-   std::vector<std::vector<Edge*>> tmp(size, std::vector<Edge*>(size, nullptr));
 }
+
 
 void Graph::AddEdge(int from, int to, DIR type) {
    AddEdge(new Edge(nodes_.at(from), nodes_.at(to)), false);
    if(type == UNDIRECTED)
       AddEdge(new Edge(nodes_.at(to), nodes_.at(from)), true);
+}
+
+void Graph::AddEdge(int from, int to, double weight, double capacity){
+   Edge *edge = new Edge(nodes_.at(from), nodes_.at(to), weight);
+   edge->capacity_ = capacity;
+   AddEdge(edge, true);
 }
 
 void Graph::AddEdge(int from, int to, double weight, DIR type) {
@@ -37,6 +43,13 @@ void Graph::AddEdge(Edge* edge, bool add_weight){
    if(add_weight)
       weight_sum_ += edge->weight_;
    AddAdjacency(edge);
+}
+
+int Graph::AddNode(double balance){
+   int pos = nodes_.size();
+   nodes_.emplace_back(new Node(pos));
+   nodes_[pos]->_balance = balance;
+   return pos;
 }
 
 
@@ -64,12 +77,12 @@ void Graph::ClearEdges(){
    }
 }
 
-std::vector< std::vector< double>>  Graph::GetWeightMatrix(){
+std::vector< std::vector< double>>  Graph::GetCapacityMatrix(){
    
    unsigned int size = nodes_.size();
    std::vector<std::vector<double>> adj_matrix(size, std::vector<double>(size, 0));
    for(auto e : edges_)
-      adj_matrix[e->from_->id_][e->to_->id_] = e->weight_;
+      adj_matrix[e->from_->id_][e->to_->id_] = e->capacity_;
    
    return adj_matrix;
 }
@@ -112,12 +125,4 @@ Edge* Graph::GetEdge(Node* from, Node* to){
 
 Edge* Graph::GetEdge(int from, int to) {
    return GetEdge(nodes_[from], nodes_[to]);
-}
-
-std::vector<Edge*>* Graph::GetAllEdgesTo(Node *rome) {
-   std::vector<Edge*>* edge_list = new std::vector<Edge*>();
-   for(auto e: edges_)
-      if (e->to_ == rome)
-         edge_list->emplace_back(e);
-   return edge_list;
 }
