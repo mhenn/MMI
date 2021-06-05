@@ -19,7 +19,7 @@ class SP {
    public:
       static void OutputShortestPath(Graph *g, Node *dst);
       static Graph *Dijkstra(Graph *g, Node *start);
-      static Graph *BellmanFord(Graph *g, Node *start);
+      static Edge *BellmanFord(Graph *g, Node *start);
 };
 
 

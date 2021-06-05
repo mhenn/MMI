@@ -6,7 +6,7 @@
 #include "Reader.h"
 #include <string>
 
-Graph* Reader::ReadFile(std::string file_name, Graph_type type) {
+Graph* Reader::ReadFile(const std::string& file_name, Graph_type type) {
    std::ifstream file(file_name);
    Graph* g;
    std::string line;

@@ -14,6 +14,7 @@ class Edge {
       Node *to_;
       double weight_ = 0;
       double capacity_ = 0;
+      bool residual = false;
       
       Edge(){}
       ~Edge(){}

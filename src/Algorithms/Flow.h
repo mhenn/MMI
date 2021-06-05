@@ -7,12 +7,10 @@
 #include "SP.h"
 
 class Flow {
-   
-   
-   public:
-      static double EdmondsKarp(Graph* g, Node* s, Node* t);
       
-      static std::vector<int> FlowBSF(Graph*g,std::vector<std::vector<int>> flow, Node* s, Node* t);
+   public:
+      
+      static double EdmondsKarp(Graph *g, Node *s, Node *t, std::vector<std::vector<double>>* flow);
       
       static bool
       FlowBSF(Graph *g, std::vector<std::vector<double>> capacity, std::vector<std::vector<double>> flow, Node *start,

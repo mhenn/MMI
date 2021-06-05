@@ -42,9 +42,9 @@ Graph *SP::Dijkstra(Graph *g, Node *start) {
    return g;
 }
 
-Graph *SP::BellmanFord(Graph *g, Node *start) {
+Edge *SP::BellmanFord(Graph *g, Node *start) {
    
-   g->Clear();
+   //g->Clear();
    std::vector<double> dist(g->Size(), 0);
    start->dist_ = 0;
    Node *from, *to;
@@ -66,14 +66,11 @@ Graph *SP::BellmanFord(Graph *g, Node *start) {
       from = e->from_;
       to = e->to_;
       weight = e->weight_;
-      if (from->dist_ + weight < to->dist_) {
-         return nullptr;
+      if (from->dist_ + weight < to->dist_ ) {
+         return e;
       }
-      
-      
    }
-   
-   return g;
+   return nullptr;
 }
 
 void SP::OutputShortestPath(Graph *g, Node *dst) {

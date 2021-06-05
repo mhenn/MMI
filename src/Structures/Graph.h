@@ -53,6 +53,8 @@ class Graph {
       void AddEdge(int from, int to, double weight, double capacity);
       
       int AddNode(double balance);
+      
+      void AddEdge(int from, int to, double weight, double capacity, bool residual);
 };
 
 #endif //MMI_GRAPH_H

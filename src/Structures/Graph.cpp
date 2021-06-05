@@ -19,6 +19,7 @@ Graph::Graph(int size){
 }
 
 
+
 void Graph::AddEdge(int from, int to, DIR type) {
    AddEdge(new Edge(nodes_.at(from), nodes_.at(to)), false);
    if(type == UNDIRECTED)
@@ -28,6 +29,13 @@ void Graph::AddEdge(int from, int to, DIR type) {
 void Graph::AddEdge(int from, int to, double weight, double capacity){
    Edge *edge = new Edge(nodes_.at(from), nodes_.at(to), weight);
    edge->capacity_ = capacity;
+   AddEdge(edge, true);
+}
+
+void Graph::AddEdge(int from, int to, double weight, double capacity, bool residual){
+   Edge *edge = new Edge(nodes_.at(from), nodes_.at(to), weight);
+   edge->capacity_ = capacity;
+   edge->residual = residual;
    AddEdge(edge, true);
 }
 

@@ -33,10 +33,10 @@ void ExecP1() {
    Reader r = Reader();
    using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
    for (const auto &dirEntry : recursive_directory_iterator("../graphs/p1/")) {
-      std::filesystem::path file = dirEntry.path();
+      const std::filesystem::path& file = dirEntry.path();
       std::string f = file.generic_string();
       std::cout << f << std::endl;
-      Graph *g = r.ReadFile(f, simple);
+      Graph *g = Reader::ReadFile(f, simple);
       Search s = Search();
       int n = s.ConnectedComponent(g);
       std::cout << n << std::endl;
@@ -51,10 +51,10 @@ void ExecP2() {
    MST mst = MST();
    using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
    for (const auto &dirEntry : recursive_directory_iterator("../graphs/p2/")) {
-      std::filesystem::path file = dirEntry.path();
+      const std::filesystem::path& file = dirEntry.path();
       std::string f = file.generic_string();
       std::cout << f << std::endl;
-      Graph *g = r.ReadFile(f, weighted);
+      Graph *g = Reader::ReadFile(f, weighted);
       Graph *m = mst.Kruskal(g);
       double sum = 0;
       std::cout << m->weight_sum_ << std::endl;
@@ -72,12 +72,12 @@ void ExecP3(int bound, int alg) {
       bound--;
       if (bound == 0)
          return;
-      std::filesystem::path file = dirEntry.path();
+      const std::filesystem::path& file = dirEntry.path();
       
       
       std::string f = file.generic_string();
       std::cout << f << std::endl;
-      Graph *g = r.ReadFile(f, weighted);
+      Graph *g = Reader::ReadFile(f, weighted);
       auto start = std::chrono::system_clock::now();
       switch (alg) {
          case 1:
@@ -107,12 +107,14 @@ void ExecP3(int bound, int alg) {
 void ExecP4(int alg) {
    Node *dst, *tmp;
    Graph *g;
+   Edge* e;
    std::string file_name;
    std::vector<std::pair<std::string,Graph*>> g_list = GetGraph("../graphs/p4", weighted_directed);
    
    for(int i = 0; i < 2; i++) {
    
-      for (auto p : g_list) {
+      for (const auto& p : g_list) {
+         e = nullptr;
          file_name = p.first;
          g = p.second;
          dst = g->nodes_[0];
@@ -124,9 +126,9 @@ void ExecP4(int alg) {
          if (alg == 1)
             g = SP::Dijkstra(g, dst);
          else
-            g = SP::BellmanFord(g, dst);
+            e = SP::BellmanFord(g, dst);
       
-         if (!g)
+         if (e)
             std::cout << "Negativer Zyklus" << std::endl;
          else
             SP::OutputShortestPath(g, tmp);
@@ -148,13 +150,15 @@ void ExecP5() {
    double flow = 0.0;
    for(int i = 0; i < 2; i++) {
       
-      for (auto p : g_list) {
+      for (const auto& p : g_list) {
          file_name = p.first;
          g = p.second;
          start = g->nodes_[0];
          goal = g->nodes_[7];
          std::cout << file_name << std::endl;
-         flow = Flow::EdmondsKarp(g, start, goal);
+         int size = g->Size();
+         std::vector<std::vector<double>> F(size, std::vector<double>(size, 0));
+         flow = Flow::EdmondsKarp(g, start, goal, &F);
          
          std::cout << "Max Fluss: " << flow << std::endl;
          
@@ -166,13 +170,11 @@ void ExecP5() {
 }
 
 void ExecP6(int alg) {
-   Node *start, *goal;
    Graph *g;
    std::string file_name;
    std::vector<std::pair<std::string,Graph*>> g_list = GetGraph("../graphs/p6", balance);
-   double flow = 0.0;
    
-   for (auto p : g_list) {
+   for (const auto& p : g_list) {
       file_name = p.first;
       g = p.second;
       std::cout << file_name << std::endl;

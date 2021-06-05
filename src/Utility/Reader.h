@@ -15,7 +15,7 @@ enum Graph_type { simple, weighted, weighted_directed, capacity, balance};
 class Reader {
    public:
       
-      static Graph *ReadFile(std::string file_name, Graph_type type);
+      static Graph *ReadFile(const std::string& file_name, Graph_type type);
       
 };
 
