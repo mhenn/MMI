@@ -214,8 +214,6 @@ bool CostFlow::SuccessiveShortestPath(Graph* g ) {
          F[t][f] = (-1) * e->capacity_;
       }
    }
-   
-   
    //Init 2: Create residualgraph and calculate b'(v)
    double d_in, d_out;
    std::vector<Node *> src_list = std::vector<Node *>();

@@ -182,10 +182,10 @@ void ExecP6(int alg) {
       std::cout << file_name << std::endl;
       if (alg == 1) {
          flow = CostFlow::cycle_canceling(g);
-         if (!flow)
-            std::cout << "Kein b-Fluss moeglich" << std::endl;
       } else
-         CostFlow::SuccessiveShortestPath(g);
+         flow = CostFlow::SuccessiveShortestPath(g);
+      if (!flow)
+         std::cout << "Kein b-Fluss moeglich" << std::endl;
    }
 
 }
