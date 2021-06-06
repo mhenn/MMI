@@ -173,12 +173,19 @@ void ExecP6(int alg) {
    Graph *g;
    std::string file_name;
    std::vector<std::pair<std::string,Graph*>> g_list = GetGraph("../graphs/p6", balance);
+   bool flow;
    
    for (const auto& p : g_list) {
+      
       file_name = p.first;
       g = p.second;
       std::cout << file_name << std::endl;
-      CostFlow::cycle_canceling(g);
+      if (alg == 1) {
+         flow = CostFlow::cycle_canceling(g);
+         if (!flow)
+            std::cout << "Kein b-Fluss moeglich" << std::endl;
+      } else
+         CostFlow::SuccessiveShortestPath(g);
    }
 
 }

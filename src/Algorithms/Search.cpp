@@ -4,7 +4,6 @@
 
 #include "Search.h"
 
-
 std::vector<Node*> Search::Bfs(Graph* g, Node* start ){
    start->marked_ = true;
    std::queue<Node*> queue = std::queue<Node*>();
@@ -24,6 +23,31 @@ std::vector<Node*> Search::Bfs(Graph* g, Node* start ){
       }
    }
    return visited;
+}
+
+bool Search::Bfs(Graph* g, Node* start, Node* target){
+   start->marked_ = true;
+   std::queue<Node*> queue = std::queue<Node*>();
+   queue.push(start);
+   std::vector<Node*> visited = std::vector<Node*>();
+   if (start == target )
+      return true;
+   visited.push_back(start);
+   
+   while(!queue.empty()){
+      Node* node = queue.front();
+      queue.pop();
+      for(Node* d : g->adjacency_[node->id_]){
+         if (d == target)
+            return true;
+         if(!d->marked_){
+            d->marked_ = true;
+            queue.push(d);
+            visited.push_back(d);
+         }
+      }
+   }
+   return false;
 }
 std::vector<Node *> Search::Dfs(Graph* g, Node* start){
    start->marked_ = true;

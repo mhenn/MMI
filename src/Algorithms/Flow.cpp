@@ -89,7 +89,7 @@ double Flow::EdmondsKarp(Graph *g, Node *s, Node *t, std::vector<std::vector<dou
 
 
 bool Flow::FlowBSF(Graph*g,std::vector<std::vector<double>> capacity, std::vector<std::vector<double>> flow, Node* start, Node* dst){
-   
+      g->Clear();
       start->marked_ = true;
       std::queue<Node*> queue = std::queue<Node*>();
       queue.push(start);

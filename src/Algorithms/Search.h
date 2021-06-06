@@ -15,6 +15,7 @@ class Search {
       std::vector<Node *> Dfs(Graph* g, Node* start);
       int  ConnectedComponent(Graph * g);
       
+      static bool Bfs(Graph *g, Node *start, Node *target);
 };
 
 
