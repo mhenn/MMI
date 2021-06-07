@@ -25,7 +25,7 @@ Graph* CostFlow::CreateResidual(Graph *g, std::vector<std::vector<double>>* F){
       capacity = e->capacity_;
       flow = F->at(f_id)[t_id];
       remainder = capacity - flow;
-      
+      //TODO Transparenz ,continue, letzter Punkt kann gespart werden
       if (remainder == 0 ) {
          residual->AddEdge(t_id, f_id, weight * -1, 0, true);
          continue;
@@ -180,7 +180,7 @@ bool CostFlow::compute_b_flow(Graph g,  std::vector<std::vector<double>>* flow){
           target_flow += b;
       src_trgt.emplace_back(node);
    }
-   
+   // TODO return fuer ungleiche balance
    int src_node = g.AddNode(src_flow);
    int target_node = g.AddNode(target_flow);
    
@@ -218,10 +218,10 @@ bool CostFlow::SuccessiveShortestPath(Graph* g ) {
    double d_in, d_out;
    std::vector<Node *> src_list = std::vector<Node *>();
    std::vector<Node *> trgt_list = std::vector<Node *>();
-   Graph *residual= CostFlow::CreateResidual(g,&F);;
+   Graph *residual;
    Node *s, *target;
    double bs, bt;
-   auto C = residual->GetCapacityMatrix();
+   auto C = g->GetCapacityMatrix();
    while (true) {
    
       residual = CostFlow::CreateResidual(g,&F);

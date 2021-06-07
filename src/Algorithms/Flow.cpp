@@ -3,64 +3,20 @@
 //
 
 #include "Flow.h"
-/*
 
-
-double Flow::EdmondsKarp(Graph *g, Node *s, Node *t) {
-   
-   g->ClearEdges();
-   Node* tmp = nullptr;
-   Edge* inverse;
-   double min = INFINITY;
-   g = SP::BellmanFord(g, s);
-   double flow = 0.0;
-   
-   while(t->parent_ != t){
-      g->Clear();
-      g->BuildResidual();
-      
-      t->parent_ = t;
-      g = SP::BellmanFord(g, s);
-      min = INFINITY;
-      for(int i = 0; i < 2;i++) {
-         
-         tmp = t;
-         while (tmp->parent_ != tmp) {
-            Edge* edge = g->GetEdge(tmp->parent_, tmp);
-            if (i == 0){
-               if (edge->CapacityRemainder() < min )
-                  min = edge->CapacityRemainder();
-            }
-            else {
-               edge->weight_ += min;
-               if(edge->is_residual_){
-                  inverse = g->GetEdge(edge->to_, edge->from_);
-                  inverse->weight_ -= min;
-               }
-            }
-            tmp = tmp->parent_;
-         }
-      }
-      if (min < INFINITY)
-         flow+= min;
-   }
-   
-   return flow;
-}
-*/
 
 double Flow::EdmondsKarp(Graph *g, Node *s, Node *t, std::vector<std::vector<double>>* flow) {
    double max_flow = 0.0;
    int size = g->nodes_.size();
    std::vector<std::vector<double>> capacity = g->GetCapacityMatrix();
    Node* tmp = t;
-   double  min = INFINITY;
+   double  min;
    double remainder = 0.0;
    int u, v;
-   g->Clear();
    bool path_exists = FlowBSF(g,capacity,*flow,s,t);
    
    while(path_exists){
+      min = INFINITY;
       while(tmp->parent_ != tmp){
          u = tmp->parent_->id_;
          v = tmp->id_;
@@ -70,6 +26,7 @@ double Flow::EdmondsKarp(Graph *g, Node *s, Node *t, std::vector<std::vector<dou
          tmp = tmp->parent_;
       }
       tmp = t;
+      // Warum Infinity min TODO mail?
       while(tmp->parent_ != tmp and min != INFINITY){
          u = tmp->parent_->id_;
          v = tmp->id_;
@@ -77,8 +34,6 @@ double Flow::EdmondsKarp(Graph *g, Node *s, Node *t, std::vector<std::vector<dou
          flow->at(v)[u] -= min;
          tmp = tmp->parent_;
       }
-      min = INFINITY;
-      g->Clear();
       path_exists = FlowBSF(g,capacity,*flow,s,t);
    }
    
